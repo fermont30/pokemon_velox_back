@@ -42,7 +42,7 @@ export class PokemonController {
         throw new BadRequestException('Formato de tipos inválido');
       }
     }
-
+    createPokemonDto.nombre = createPokemonDto.nombre.toLowerCase();
     return this.pokemonService.create(createPokemonDto, file);
   }
 
@@ -63,6 +63,9 @@ export class PokemonController {
     @Body() updatePokemonDto: UpdatePokemonDto,
     @UploadedFile() file?: Express.Multer.File,
   ) {
+    if (updatePokemonDto.nombre) {
+      updatePokemonDto.nombre = updatePokemonDto.nombre.toLowerCase();
+    }
     return this.pokemonService.update(id, updatePokemonDto, file);
   }
 

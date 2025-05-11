@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePokemonDto } from './dto/create-pokemon.dto';
 import { UpdatePokemonDto } from './dto/update-pokemon.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -49,6 +49,10 @@ export class PokemonService {
     let publicId = '';
     
     if (file) {
+      const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+       if (!validImageTypes.includes(file.mimetype)) {
+    throw new BadRequestException('Solo se permiten archivos de imagen (jpeg, png, gif, webp)');
+    }
       console.log('Uploading image to Cloudinary...');
       const uploadResult = await this.cloudinaryService.uploadImage(file);
       imagenUrl = uploadResult.secure_url;
