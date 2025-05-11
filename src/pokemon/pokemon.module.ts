@@ -10,7 +10,7 @@ import { TipoSeedService } from './tipo.seed.service';
 @Module({
   imports: [
   TypeOrmModule.forFeature([Pokemon, Tipo]),
-  CloudinaryModule,],
+  CloudinaryModule],
   controllers: [PokemonController],
   providers: [PokemonService, TipoSeedService],
 })
